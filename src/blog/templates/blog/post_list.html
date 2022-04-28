@@ -1,0 +1,29 @@
+<html>
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <title>Post_list</title>
+    <body>
+    Your status -
+    {% if group %}
+        {{ group }}
+    {% else %}
+        Unregistered
+    {% endif %}
+    </br></br>
+
+    {% if 'Author' == group.name %}
+        <a href="{% url 'post_new' %}">Create post</a></br></br>
+    {% endif %}
+
+        {% for post in posts %}
+    <div>
+        Author: {{ post.author }}
+        Public: {{ post.public }}
+        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        {{ post.text|linebreaksbr }}</br></br>
+    </div>
+        {% endfor %}
+    </body>
+{% endblock %}
+</html>
