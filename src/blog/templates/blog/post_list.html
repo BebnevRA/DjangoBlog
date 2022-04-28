@@ -19,9 +19,14 @@
         {% for post in posts %}
     <div>
         Author: {{ post.author }}
-        Public: {{ post.public }}
+        {% if post.public %}
+            Public post
+        {% else %}
+            Protected post
+        {% endif %}
+
         <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        {{ post.text|linebreaksbr }}</br></br>
+        {{ post.text|linebreaksbr }}</br></br></br></br>
     </div>
         {% endfor %}
     </body>

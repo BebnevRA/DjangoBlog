@@ -1,5 +1,4 @@
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -7,10 +6,6 @@ from django.db.models import Q
 
 from .models import Post
 from .forms import PostForm
-
-
-# Group.objects.get_or_create(name='Subscriber')
-# Group.objects.get_or_create(name='Author')
 
 
 def post_list(request):
