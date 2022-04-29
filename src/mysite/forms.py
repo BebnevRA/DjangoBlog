@@ -11,18 +11,19 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("email", "group")
+        fields = ("email", "username", "group")
 
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields['password2'].help_text = None
         self.fields['password1'].help_text = None
+        self.fields['username'].help_text = None
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.email = self.cleaned_data["email"]
-        user.username = user.email
+        user.username = self.cleaned_data["username"]
         if commit:
             user.save()
         group = Group.objects.get(name=self.cleaned_data["group"])
