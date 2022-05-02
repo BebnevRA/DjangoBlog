@@ -1,16 +1,11 @@
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 
-from .models import Post
+from .models import Post, Like, Dislike
 from .forms import PostForm
-
-
-# Group.objects.get_or_create(name='Subscriber')
-# Group.objects.get_or_create(name='Author')
 
 
 def post_list(request):
@@ -32,7 +27,19 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+
+    if not request.user.is_authenticated and not post.public:
+        raise PermissionDenied()
+
     return render(request, 'blog/post_detail.html', {'post': post})
+
+
+@login_required
+def user_page(request):
+    current_user = request.user
+
+    return render(request, 'blog/user_page.html',
+                  {'current_user': current_user})
 
 
 @login_required
@@ -82,3 +89,28 @@ def post_delete(request, pk):
 
     post.delete()
     return redirect('post_list')
+
+
+@login_required
+def add_like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    current_user = request.user
+    try:
+        Like.objects.get(author=current_user, post=post).delete()
+    except Like.DoesNotExist:
+        Like.objects.create(author=current_user, post=post)
+
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required
+def add_dislike(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    current_user = request.user
+
+    try:
+        Dislike.objects.get(author=current_user, post=post).delete()
+    except Dislike.DoesNotExist:
+        Dislike.objects.create(author=current_user, post=post)
+
+    return redirect(request.META.get('HTTP_REFERER'))

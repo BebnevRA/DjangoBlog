@@ -4,7 +4,8 @@ from django.utils import timezone
 
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
     public = models.BooleanField()
@@ -12,3 +13,24 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Like(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.author}-->{self.post}'
+
+
+class Dislike(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.author}-->{self.post}'
+

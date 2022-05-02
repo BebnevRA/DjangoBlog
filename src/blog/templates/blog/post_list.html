@@ -12,23 +12,15 @@
     {% endif %}
     </br></br>
 
+    {% for post in posts %}
+        {% include 'blog/_post.html' %}
+    {% endfor %}
+
     {% if 'Author' == group.name %}
         <a href="{% url 'post_new' %}">Create post</a></br></br>
     {% endif %}
 
-        {% for post in posts %}
-    <div>
-        Author: {{ post.author }}
-        {% if post.public %}
-            Public post
-        {% else %}
-            Protected post
-        {% endif %}
 
-        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        {{ post.text|linebreaksbr }}</br></br>
-    </div>
-        {% endfor %}
     </body>
 {% endblock %}
 </html>
