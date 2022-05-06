@@ -5,7 +5,8 @@ from django.utils import timezone
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
-                               on_delete=models.CASCADE)
+                               on_delete=models.CASCADE,
+                               related_name='posts_id')
     title = models.CharField(max_length=200)
     text = models.TextField()
     public = models.BooleanField()
@@ -34,3 +35,14 @@ class Dislike(models.Model):
     def __str__(self):
         return f'{self.author}-->{self.post}'
 
+
+class Subscription(models.Model):
+    subscriber = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE,
+                                   related_name='subscribed_id')
+    subscribed = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.CASCADE,
+                                   related_name='subscriber_id')
+
+    def __str__(self):
+        return f'{self.subscriber}-->{self.subscribed}'

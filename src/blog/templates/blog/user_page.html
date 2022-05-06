@@ -2,6 +2,31 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    Привет
+
+<h2>{{ second_user }}</h2>
+
+{% if second_user == user %}
+    <a href="{% url 'user_edit' %}">Edit profile info</a></br>
+{% endif %}
+
+{% if sub %}
+    You are subscribe -
+    <a href="{% url 'subscribe' pk=second_user.pk %}">Unsubscribe</a></br>
+{% else %}
+    You are not subscribe -
+    <a href="{% url 'subscribe' pk=second_user.pk %}">Subscribe</a></br>
+{% endif%}
+
+{% if count_posts == 0 %}
+    User did not posts
+{% elif count_posts == 1 %}
+    User wrote only 1 post:
+{% else %}
+    User wrote {{ count_posts }} posts:
+{% endif%}
+{% for post in posts %}
+    {% include 'blog/_post.html' %}
+{% endfor %}
+
 {% endblock %}
 </html>

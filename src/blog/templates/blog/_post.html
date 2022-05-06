@@ -1,15 +1,18 @@
 <div>
-    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
     {{ post.text|linebreaksbr }}</br></br>
 
-    Author: {{ post.author }}
+    <a href="{% url 'user_detail' username=post.author.username %}">Author: {{ post.author }}</a>
     {% if post.public %}
         Public post
     {% else %}
         Protected post
     {% endif %}</br>
+
     <a href="{% url 'add_like' pk=post.pk %}">Likes:
         {{ post.like_set.count }}</a>
+
     <a href="{% url 'add_dislike' pk=post.pk %}">Dislikes:
         {{ post.dislike_set.count }}</a>
+
 </div>

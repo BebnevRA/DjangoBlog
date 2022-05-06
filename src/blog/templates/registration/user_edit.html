@@ -1,0 +1,28 @@
+<html>
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form_user.as_p }}
+    <button type="submit" name="edit_user">Save changes</button>
+</form>
+</br>
+
+
+<form method="post">
+    {% csrf_token %}
+    {{ form_password.as_p }}
+    <button type="submit" name="change_password">Save changes</button>
+</form>
+</br>
+
+{% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+</html>

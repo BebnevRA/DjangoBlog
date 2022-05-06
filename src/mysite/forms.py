@@ -37,5 +37,8 @@ class RegisterForm(UserCreationForm):
         return data
 
 
+class UserEditForm(forms.ModelForm):
 
-
+    class Meta:
+        model = User
+        fields = ("email", "username")

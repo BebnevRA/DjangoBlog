@@ -4,10 +4,7 @@
 {% block content %}
     <title>Post_detail</title>
     <body>
-        <p>Author: {{ post.author }}</p>
-        {% if post.created_date %}
-                Created: {{ post.created_date }}
-        {% endif %}
+         Created: {{ post.created_date }}
 
         {% include 'blog/_post.html' %}
 
