@@ -9,21 +9,16 @@
         {{ group }}
     {% else %}
         Unregistered
+    {% endif %}</br>
+
+    {% if 'Author' == group.name %}
+        <a href="{% url 'post_new' %}">Create post</a>
     {% endif %}
     </br></br>
 
-    {% if 'Author' == group.name %}
-        <a href="{% url 'post_new' %}">Create post</a></br></br>
-    {% endif %}
-
-        {% for post in posts %}
-    <div>
-        Author: {{ post.author }}
-        Public: {{ post.public }}
-        <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        {{ post.text|linebreaksbr }}</br></br>
-    </div>
-        {% endfor %}
+    {% for post in posts %}
+        {% include 'blog/_post.html' %}
+    {% endfor %}
     </body>
 {% endblock %}
 </html>

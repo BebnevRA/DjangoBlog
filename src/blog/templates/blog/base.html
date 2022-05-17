@@ -1,11 +1,13 @@
 {% if user.is_authenticated %}
-    {{ user }}---
+    <a href="{% url 'user_detail' username=user.username %}">{{ user }}</a>---
+    <a href="{% url 'subscriptions_list' %}">Subscriptions</a>---
     <a href="{% url 'logout' %}">Log out</a>---
 {% else %}
     <a href="{% url 'login' %}">Sign in</a>---
     <a href="{% url 'signup' %}">Sign up</a>---
 {% endif %}
 <a href="{% url 'post_list' %}">All posts</a>---
+Hjvfy,t,ytd228
 </br></br>
 {% block content %}
 {% endblock %}
